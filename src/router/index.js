@@ -10,6 +10,7 @@ import 'nprogress/nprogress.css'
 Vue.use(Router)
 
 const constRouter = [
+
   {
     path: '/redirect',
     component: Layout,
@@ -21,11 +22,13 @@ const constRouter = [
       }
     ]
   },
+
   {
     path: '/404',
     component: (resolve) => require(['@/views/error-page/404'], resolve),
     hidden: true
   },
+
   {
     path: '/login',
     name: '登录页',
@@ -44,6 +47,7 @@ const constRouter = [
       }
     ]
   },
+
   {
     path: '/profile',
     component: Layout,
@@ -58,6 +62,7 @@ const constRouter = [
       }
     ]
   },
+
   {
     path: '/error',
     component: Layout,
@@ -88,6 +93,7 @@ const whiteList = ['/login']
 let asyncRouter
 
 // 导航守卫，渲染动态路由
+// TODO: 阮中楠暂时将全局路由守卫注释掉，以便实现指定页面的路由跳转。目前跑不通后端。
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (whiteList.indexOf(to.path) !== -1) {

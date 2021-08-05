@@ -124,10 +124,14 @@ const request = {
       }
     })
   },
+
   login(url, params) {
     params['grant_type'] = 'password'
     return service.post(url, params, {
       transformRequest: [(params) => {
+        // TODO:
+        console.log(' in login requst url = ? ', url)
+
         return tansParams(params)
       }],
       headers: {
@@ -135,6 +139,7 @@ const request = {
       }
     })
   },
+
   post(url, params) {
     return service.post(url, params, {
       transformRequest: [(params) => {

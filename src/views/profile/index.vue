@@ -1,27 +1,48 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-19 10:09:03
+ * @LastEditTime: 2021-07-31 21:10:53
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \FEBS-Cloud-Web\src\views\profile\index.vue
+-->
+
 <template>
   <div class="app-container">
+
     <div v-if="user">
+
       <el-row :gutter="20">
+
         <el-col :span="8" :xs="24">
           <user-card :user="user" />
         </el-col>
+
         <el-col :span="16" :xs="24">
+
           <el-card>
+
             <el-tabs v-model="activeTab">
               <el-tab-pane :label="$t('common.timeline')" name="timeline">
                 <timeline />
               </el-tab-pane>
+
               <el-tab-pane :label="$t('common.account')" name="account">
                 <account :user="user" />
               </el-tab-pane>
+
               <el-tab-pane :label="$t('common.password')" name="password">
                 <password />
               </el-tab-pane>
             </el-tabs>
+
           </el-card>
+
         </el-col>
+
       </el-row>
     </div>
+
   </div>
 </template>
 
@@ -32,8 +53,10 @@ import Timeline from './components/Timeline'
 import Account from './components/Account'
 
 export default {
+
   name: 'Profile',
   components: { UserCard, Password, Timeline, Account },
+
   data() {
     return {
       activeTab: ''

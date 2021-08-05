@@ -1,5 +1,7 @@
 <template>
   <div class="login-container">
+
+    <!-- 登陆界面的文本 -->
     <div class="login-info">
       <div class="title">FEBS Cloud</div>
       <div class="sub-title">{{ $t('common.system') }}</div>
@@ -13,13 +15,23 @@
       <div class="desc">8. {{ $t('common.desc.h') }}</div>
       <div class="desc">9. {{ $t('common.desc.i') }}</div>
     </div>
-    <el-form ref="loginForm" :model="loginForm" :rules="rules" class="login-form" autocomplete="off" label-position="left">
+
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="rules"
+      class="login-form"
+      autocomplete="off"
+      label-position="left"
+    >
+
       <div class="title-container">
         <h3 class="title">
           {{ $t('login.title') }}
         </h3>
         <lang-select class="set-language" />
       </div>
+
       <span v-if="login.type === 'up'">
         <el-form-item prop="username">
           <el-input
@@ -60,10 +72,16 @@
           />
         </el-form-item>
         <img :src="imageCode" alt="codeImage" class="code-image" @click="getCodeImage">
-        <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:14px;" @click.native.prevent="handleLogin">
+        <el-button
+          :loading="loading"
+          type="primary"
+          style="width:100%;margin-bottom:14px;"
+          @click.native.prevent="handleLogin"
+        >
           {{ $t('login.logIn') }}
         </el-button>
       </span>
+
       <span v-if="login.type === 'social'">
         {{ $t('login.chooseToSignIn') }}
         <div>
@@ -74,6 +92,7 @@
           </template>
         </div>
       </span>
+
       <span v-if="login.type === 'bind'" style="margin-top: -1rem">
         <el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
           <el-tab-pane :label="$t('common.bindLogin')" name="bindLogin">
@@ -100,7 +119,12 @@
                 autocomplete="off"
               />
             </el-form-item>
-            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:14px;" @click.native.prevent="bindLogin">
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="width:100%;margin-bottom:14px;"
+              @click.native.prevent="bindLogin"
+            >
               {{ $t('common.bindLogin') }}
             </el-button>
           </el-tab-pane>
@@ -128,22 +152,32 @@
                 autocomplete="off"
               />
             </el-form-item>
-            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:14px;" @click.native.prevent="signLogin">
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="width:100%;margin-bottom:14px;"
+              @click.native.prevent="signLogin"
+            >
               {{ $t('common.signLogin') }}
             </el-button>
           </el-tab-pane>
         </el-tabs>
       </span>
+
       <el-dropdown class="login-type" placement="top-end">
         <span class="el-dropdown-link">
           <el-link type="primary">{{ $t('login.ortherLoginType') }}</el-link>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :disabled="login.type === 'up'" @click.native="login.type = 'up'">{{ $t('login.type.up') }}</el-dropdown-item>
-          <el-dropdown-item :disabled="login.type === 'social'" @click.native="login.type = 'social'">{{ $t('login.type.social') }}</el-dropdown-item>
+          <el-dropdown-item :disabled="login.type === 'up'" @click.native="login.type = 'up'">{{ $t('login.type.up') }}
+          </el-dropdown-item>
+          <el-dropdown-item :disabled="login.type === 'social'" @click.native="login.type = 'social'">
+            {{ $t('login.type.social') }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+
     </el-form>
+
     <span class="login-footer">
       © 2020 <a target="_blank" href="https://mrbird.cc">MrBird</a> - FEBS
     </span>
@@ -153,13 +187,19 @@
 <script>
 import LangSelect from '@/components/LangSelect'
 import db from '@/utils/localstorage'
-import { randomNum } from '@/utils'
+import {
+  randomNum
+} from '@/utils'
 import axios from 'axios'
-import { socialLoginUrl } from '@/settings'
+import {
+  socialLoginUrl
+} from '@/settings'
 
 export default {
   name: 'Login',
-  components: { LangSelect },
+  components: {
+    LangSelect
+  },
   data() {
     return {
       tabActiveName: 'bindLogin',
@@ -168,13 +208,36 @@ export default {
       login: {
         type: 'up'
       },
-      logo: [
-        { img: 'gitee.png', name: 'gitee', radius: true },
-        { img: 'github.png', name: 'github', radius: true },
-        { img: 'tencent_cloud.png', name: 'tencent_cloud', radius: true },
-        { img: 'qq.png', name: 'qq', radius: false },
-        { img: 'dingtalk.png', name: 'dingtalk', radius: true },
-        { img: 'microsoft.png', name: 'microsoft', radius: false }
+      logo: [{
+        img: 'gitee.png',
+        name: 'gitee',
+        radius: true
+      },
+      {
+        img: 'github.png',
+        name: 'github',
+        radius: true
+      },
+      {
+        img: 'tencent_cloud.png',
+        name: 'tencent_cloud',
+        radius: true
+      },
+      {
+        img: 'qq.png',
+        name: 'qq',
+        radius: false
+      },
+      {
+        img: 'dingtalk.png',
+        name: 'dingtalk',
+        radius: true
+      },
+      {
+        img: 'microsoft.png',
+        name: 'microsoft',
+        radius: false
+      }
       ],
       loginForm: {
         username: '',
@@ -185,18 +248,54 @@ export default {
         signPassword: ''
       },
       rules: {
-        username: { required: true, message: this.$t('rules.require'), trigger: 'blur' },
-        password: { required: true, message: this.$t('rules.require'), trigger: 'blur' },
-        code: { required: true, message: this.$t('rules.require'), trigger: 'blur' },
-        bindUsername: { required: true, message: this.$t('rules.require'), trigger: 'blur' },
-        bindPassword: { required: true, message: this.$t('rules.require'), trigger: 'blur' },
-        signUsername: [
-          { required: true, message: this.$t('rules.require'), trigger: 'blur' },
-          { min: 4, max: 10, message: this.$t('rules.range4to10'), trigger: 'blur' }
+        username: {
+          required: true,
+          message: this.$t('rules.require'),
+          trigger: 'blur'
+        },
+        password: {
+          required: true,
+          message: this.$t('rules.require'),
+          trigger: 'blur'
+        },
+        code: {
+          required: true,
+          message: this.$t('rules.require'),
+          trigger: 'blur'
+        },
+        bindUsername: {
+          required: true,
+          message: this.$t('rules.require'),
+          trigger: 'blur'
+        },
+        bindPassword: {
+          required: true,
+          message: this.$t('rules.require'),
+          trigger: 'blur'
+        },
+        signUsername: [{
+          required: true,
+          message: this.$t('rules.require'),
+          trigger: 'blur'
+        },
+        {
+          min: 4,
+          max: 10,
+          message: this.$t('rules.range4to10'),
+          trigger: 'blur'
+        }
         ],
-        signPassword: [
-          { required: true, message: this.$t('rules.require'), trigger: 'blur' },
-          { min: 6, max: 20, message: this.$t('rules.range6to20'), trigger: 'blur' }
+        signPassword: [{
+          required: true,
+          message: this.$t('rules.require'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          max: 20,
+          message: this.$t('rules.range6to20'),
+          trigger: 'blur'
+        }
         ]
       },
       authUser: null,
@@ -221,6 +320,8 @@ export default {
   },
   methods: {
     getCodeImage() {
+      console.log(' in login : ', this.codeUrl)
+
       axios({
         method: 'GET',
         url: `${this.codeUrl}?key=${this.randomId}`,
@@ -254,7 +355,9 @@ export default {
     },
     socialLogin(oauthType) {
       const url = `${this.socialLoginUrl}/${oauthType}/login`
-      window.open(url, 'newWindow', `resizable=yes, height=${this.page.height}, width=${this.page.width}, top=10%, left=10%, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no`)
+      window.open(url, 'newWindow',
+        `resizable=yes, height=${this.page.height}, width=${this.page.width}, top=10%, left=10%, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no`
+      )
       window.addEventListener('message', this.resolveSocialLogin, false)
     },
     resolveSocialLogin(e) {
@@ -264,7 +367,8 @@ export default {
         that.login.type = 'bind'
         const authUser = data.data
         that.authUser = authUser
-        that.$confirm(that.$t('common.current') + authUser.source + that.$t('common.socialAccount') + authUser.nickname + that.$t('common.socialTips'), that.$t('common.tips'), {
+        that.$confirm(that.$t('common.current') + authUser.source + that.$t('common.socialAccount') + authUser
+          .nickname + that.$t('common.socialTips'), that.$t('common.tips'), {
           confirmButtonText: that.$t('common.signLogin'),
           cancelButtonText: that.$t('common.bindLogin'),
           type: 'warning'
@@ -281,11 +385,20 @@ export default {
         // do nothing
       }
     },
+
     bindLogin() {
       let username_c = false
       let password_c = false
-      this.$refs.loginForm.validateField('bindUsername', e => { if (!e) { username_c = true } })
-      this.$refs.loginForm.validateField('bindPassword', e => { if (!e) { password_c = true } })
+      this.$refs.loginForm.validateField('bindUsername', e => {
+        if (!e) {
+          username_c = true
+        }
+      })
+      this.$refs.loginForm.validateField('bindPassword', e => {
+        if (!e) {
+          password_c = true
+        }
+      })
       if (username_c && password_c) {
         this.loading = true
         const that = this
@@ -295,6 +408,7 @@ export default {
           ...that.authUser
         }
         params.token = null
+
         that.$post('auth/social/bind/login', params).then((r) => {
           const data = r.data.data
           this.saveLoginData(data)
@@ -306,11 +420,20 @@ export default {
         })
       }
     },
+
     signLogin() {
       let username_c = false
       let password_c = false
-      this.$refs.loginForm.validateField('signUsername', e => { if (!e) { username_c = true } })
-      this.$refs.loginForm.validateField('signPassword', e => { if (!e) { password_c = true } })
+      this.$refs.loginForm.validateField('signUsername', e => {
+        if (!e) {
+          username_c = true
+        }
+      })
+      this.$refs.loginForm.validateField('signPassword', e => {
+        if (!e) {
+          password_c = true
+        }
+      })
       if (username_c && password_c) {
         this.loading = true
         const that = this
@@ -335,12 +458,25 @@ export default {
       let username_c = false
       let password_c = false
       let code_c = false
-      this.$refs.loginForm.validateField('username', e => { if (!e) { username_c = true } })
-      this.$refs.loginForm.validateField('password', e => { if (!e) { password_c = true } })
-      this.$refs.loginForm.validateField('code', e => { if (!e) { code_c = true } })
+      this.$refs.loginForm.validateField('username', e => {
+        if (!e) {
+          username_c = true
+        }
+      })
+      this.$refs.loginForm.validateField('password', e => {
+        if (!e) {
+          password_c = true
+        }
+      })
+      this.$refs.loginForm.validateField('code', e => {
+        if (!e) {
+          code_c = true
+        }
+      })
       if (username_c && password_c && code_c) {
         this.loading = true
         const that = this
+
         this.$login('auth/oauth/token', {
           ...that.loginForm,
           key: this.randomId
@@ -382,7 +518,9 @@ export default {
       })
     },
     loginSuccessCallback() {
-      this.$get('system/user/success').catch((e) => { console.log(e) })
+      this.$get('system/user/success').catch((e) => {
+        console.log(e)
+      })
     }
   }
 }
@@ -391,6 +529,7 @@ export default {
 <style lang="scss">
   @import "login";
 </style>
+
 <style lang="scss" scoped>
   @import "login-scoped";
 </style>

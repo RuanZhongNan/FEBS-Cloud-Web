@@ -1,6 +1,7 @@
 'use strict'
 const settings = require('./src/settings.js')
 const path = require('path')
+
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
@@ -9,7 +10,8 @@ const name = settings.title // page title
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
-const port = 9527 // dev port
+// TODO 这里暂时更改成 后端的端口号 8301 。 9527 -> 8301
+const port = 9527; // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -35,13 +37,53 @@ module.exports = {
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
+
       [process.env.VUE_APP_BASE_API]: {
+        // target: 'http://localhost:8301/',
+        // http://192.168.8.189:9527/
+        // http://192.168.8.189:8301/
+
         target: 'http://localhost:8301/',
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
-      }
+      },
+
+      // TODO: 开启以下的注释内容。实现跨域浏览。
+      // "/auth/user": {
+      //   target: "http://localhost:8301/",
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     "^/auth/user": '',
+      //   },
+      // },
+
+      // 可能的目标： 192.168.8.108
+      // TODO: 现在token验证传递失败，试图设置这一部分的反向代理。
+      // "/auth/oauth/token": {
+      //   target: "http://localhost:8301/",
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     "^/auth/oauth/token": '',
+      //   },
+      // },
+
+      // 看看手动设置的跨域浏览 是否起效？不起效。
+      // "auth/captcha": {
+      //   target: "http://localhost:8301/",
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     "^/auth/captcha": '',
+      //   },
+      // },
+
+
+
+
+
+
+
     }
   },
   configureWebpack: {
@@ -99,7 +141,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

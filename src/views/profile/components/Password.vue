@@ -1,17 +1,30 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-19 10:09:03
+ * @LastEditTime: 2021-08-01 20:40:45
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \FEBS-Cloud-Web\src\views\profile\components\Password.vue
+-->
 <template>
   <el-form ref="form" :model="p" :rules="rules" label-position="right" label-width="80px" class="form">
+
     <el-form-item :label="$t('table.user.oldPassword')" prop="oldPassword">
       <el-input v-model="p.oldPassword" type="password" />
     </el-form-item>
+
     <el-form-item :label="$t('table.user.newPassword')" prop="newPassword">
       <el-input v-model="p.newPassword" type="password" />
     </el-form-item>
+
     <el-form-item :label="$t('table.user.confirmPassword')" prop="confirmPassword">
       <el-input v-model="p.confirmPassword" type="password" />
     </el-form-item>
+
     <el-form-item>
       <el-button type="primary" plain :loading="buttonLoading" @click="submit">{{ $t('common.edit') }}</el-button>
     </el-form-item>
+
   </el-form>
 </template>
 <script>
